@@ -106,6 +106,9 @@ public class WikiTextParser {
         // remove #REDIRECT
         text = text.replaceAll(redirectPattern.toString(), "");
 
+        // remove disambiguation
+        text = text.replaceAll(disambCatPattern.toString(), "");
+
         // __NOTOC__
         text = text.replaceAll("__NOTOC__", "");
 
@@ -122,7 +125,7 @@ public class WikiTextParser {
         text = text.replaceAll("</?.*?>", " ");
 
         // remove external links
-        text = text.replaceAll("^(http|https)://(.*?)\\.[htm|html|jpg|gif|txt]", "");
+        text = text.replaceAll("^(http|https)://(.*?)\\.[htm|html|jpg|gif|txt]$", "");
 
         // remove {{  }}
         text = text.replaceAll("\\{\\{.*?\\}\\}", " ");
