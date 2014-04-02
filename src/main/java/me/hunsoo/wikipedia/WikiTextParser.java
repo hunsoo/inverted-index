@@ -102,6 +102,7 @@ public class WikiTextParser {
      */
     public String getPlainText() {
         String text = wikiText;
+        Matcher matcher;
 
         // remove #REDIRECT
         text = text.replaceAll(redirectPattern.toString(), "");
@@ -125,7 +126,7 @@ public class WikiTextParser {
         text = text.replaceAll("</?.*?>", " ");
 
         // remove external links
-        text = text.replaceAll("^(http|https)://(.*?)\\.[htm|html|jpg|gif|txt]$", "");
+        text = text.replaceAll("((https?|ftp|gopher|telnet|file|Unsure|http):((//)|(\\\\))+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)", "");
 
         // remove {{  }}
         text = text.replaceAll("\\{\\{.*?\\}\\}", " ");
@@ -133,7 +134,7 @@ public class WikiTextParser {
         // remove [[ : ]]
         //text = text.replaceAll("\\[\\[(.*?):(.*?)\\]\\]", " ");
         Pattern linkPattern = Pattern.compile("^\\[\\[(.*?):(.*?)\\]\\]$", Pattern.UNICODE_CHARACTER_CLASS);
-        Matcher matcher = linkPattern.matcher(wikiText);
+        matcher = linkPattern.matcher(text);
         if (matcher.find()) {
             matcher.replaceAll(" ");
         }
@@ -147,7 +148,7 @@ public class WikiTextParser {
         // remove [  ]
         //text = text.replaceAll("\\[.*?\\]", " ");
         linkPattern = Pattern.compile("\\[(.*?)\\]", Pattern.MULTILINE);
-        matcher = linkPattern.matcher(wikiText);
+        matcher = linkPattern.matcher(text);
         if (matcher.find()) {
             matcher.replaceAll(" ");
         }

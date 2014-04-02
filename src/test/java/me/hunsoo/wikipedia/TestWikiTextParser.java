@@ -2,6 +2,7 @@ package me.hunsoo.wikipedia;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -74,6 +75,7 @@ public class TestWikiTextParser {
     }
 
     @Test
+    @Ignore
     public void testPlainText() {
         String[] words = parser.getPlainText().split(" ");
         System.out.println("==PlainText==");
@@ -93,6 +95,7 @@ public class TestWikiTextParser {
                 "accessibility"
         };
         String[] words = parser.getPlainText().split(" ");
+        System.out.println("==PlainText==");
         for (String word : words) {
             word = word.trim();
             if (!word.equals("")) {
@@ -100,5 +103,11 @@ public class TestWikiTextParser {
             }
         }
         assertArrayEquals(expected, words);
+    }
+
+    @Test
+    public void testPlainText3() {
+        parser = new WikiTextParser("http://www.example.com/test_file.jpg https://www.a.net http://b.edu/index.html");
+        assertEquals("", parser.getPlainText());
     }
 }

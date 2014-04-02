@@ -39,7 +39,7 @@ public class TestTopN {
         mapDriver.getContext().getConfiguration().set("N", "3");
         reduceDriver.getContext().getConfiguration().set("N", "3");
 
-        when(mapDriver.getContext().getConfiguration().get("N")).thenReturn("3");
+        //when(mapDriver.getContext().getConfiguration().get("N")).thenReturn("3");
         when(reduceDriver.getContext().getNumReduceTasks()).thenReturn(1);
     }
 
