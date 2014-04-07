@@ -26,11 +26,11 @@ public class TestInvertedIndex {
     public void setup() {
         InvertedIndexMapper mapper = new InvertedIndexMapper();
         InvertedIndexReducer reducer = new InvertedIndexReducer();
-        mapDriver = new MapDriver();
+        mapDriver = new MapDriver<LongWritable, Text, Text, LongWritable>();
         mapDriver.setMapper(mapper);
-        reduceDriver = new ReduceDriver();
+        reduceDriver = new ReduceDriver<Text, LongWritable, Text, Text>();
         reduceDriver.setReducer(reducer);
-        mapReduceDriver = new MapReduceDriver();
+        mapReduceDriver = new MapReduceDriver<LongWritable, Text, Text, LongWritable, Text, Text>();
         mapReduceDriver.setMapper(mapper);
         mapReduceDriver.setReducer(reducer);
 
