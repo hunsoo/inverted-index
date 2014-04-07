@@ -17,6 +17,7 @@ public class InvertedIndexMapper extends Mapper<LongWritable, Text, Text, LongWr
 	private Text word = new Text();
 	private LongWritable docId;
 	private Set<String> excludedWordSet;
+	private Set<String> wordAtIdSet;
 	private String[] tokens;
 
 	private WikiPage wikiPage;
@@ -36,6 +37,17 @@ public class InvertedIndexMapper extends Mapper<LongWritable, Text, Text, LongWr
 		}
 
 		wikiTextParser = WikiTextParser.getInstance();
+		wordAtIdSet = new HashSet<String>();
+	}
+
+	@Override
+	protected void cleanup(Context context) throws IOException, InterruptedException {
+		for (String wordAtId : wordAtIdSet) {
+			String wordAndId[] = wordAtId.split("@");
+			word.set(wordAndId[0]);
+			docId = new LongWritable(Long.parseLong(wordAndId[1]));
+			context.write(word, docId);
+		}
 	}
 
 	/**
@@ -63,9 +75,10 @@ public class InvertedIndexMapper extends Mapper<LongWritable, Text, Text, LongWr
 		String page = value.toString();
 		wikiPage = WikiXMLParser.parse(page);
 		String wikiText = wikiPage.getWikiText();
-		docId = new LongWritable(wikiPage.getDocumentId());
+		long documentId = wikiPage.getDocumentId();
+		docId = new LongWritable(documentId);
 
-		context.setStatus("docId " + docId);
+		context.setStatus("docId " + documentId);
 
 		String plainText = wikiTextParser.parsePlainText(wikiText);
 
@@ -75,8 +88,9 @@ public class InvertedIndexMapper extends Mapper<LongWritable, Text, Text, LongWr
 			String token = tokens[i].trim().toLowerCase();
 
 			if (!token.equals("") && !excludedWordSet.contains(token)) {
-				word.set(token);
-				context.write(word, docId);
+//				word.set(token);
+//				context.write(word, docId);
+				wordAtIdSet.add(token + "@" + documentId);
 			}
 		}
 	}
