@@ -62,6 +62,7 @@ public class InvertedIndexMapper extends Mapper<LongWritable, Text, Text, LongWr
 	protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
 		String page = value.toString();
 		wikiPage = WikiXMLParser.parse(page);
+
 		String wikiText = wikiPage.getWikiText();
 		long documentId = wikiPage.getDocumentId();
 		docId = new LongWritable(documentId);
@@ -75,14 +76,12 @@ public class InvertedIndexMapper extends Mapper<LongWritable, Text, Text, LongWr
 		Set<String> wordSet = new HashSet<String>();
 		for (int i = 0; i < tokens.length; ++i) {
 			String token = tokens[i].trim().toLowerCase();
-			if (!token.equals("") && !excludedWordSet.contains(token))
-				wordSet.add(token);
-
-		}
-
-		for (String distinctWord : wordSet) {
-			word.set(distinctWord);
-			context.write(word, docId);
+			if (!token.equals("") && !excludedWordSet.contains(token)) {
+				if (wordSet.add(token)) {
+					word.set(token);
+					context.write(word, docId);
+				}
+			}
 		}
 	}
 }
