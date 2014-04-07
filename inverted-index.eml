@@ -79,7 +79,6 @@
 		<level name="Maven: org.hamcrest:hamcrest-core:1.3" value="project"/>
 		<level name="Maven: org.mockito:mockito-all:1.8.5" value="project"/>
 		<level name="Maven: org.eclipse.mylyn.wikitext:wikitext.core:2.1.0.N20140325-2210" value="project"/>
-		<level name="Maven: org.eclipse.mylyn.wikitext:wikitext.html.core:2.1.0.N20140325-2210" value="project"/>
 		<level name="Maven: org.eclipse.mylyn.wikitext:wikitext.mediawiki:2.1.0.N20140325-2210" value="project"/>
 	</levels>
 </component>

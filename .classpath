@@ -72,7 +72,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Maven: org.hamcrest:hamcrest-core:1.3"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Maven: org.mockito:mockito-all:1.8.5"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Maven: org.eclipse.mylyn.wikitext:wikitext.core:2.1.0.N20140325-2210"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Maven: org.eclipse.mylyn.wikitext:wikitext.html.core:2.1.0.N20140325-2210"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Maven: org.eclipse.mylyn.wikitext:wikitext.mediawiki:2.1.0.N20140325-2210"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
