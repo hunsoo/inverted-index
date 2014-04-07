@@ -28,7 +28,7 @@ public class TopNMapper extends Mapper<LongWritable, Text, NullWritable, Text> {
     protected void setup(Context context) {
         Configuration conf = context.getConfiguration();
         N = Integer.parseInt(conf.get("N"));
-        topN = new TreeMap<>();
+        topN = new TreeMap<Integer, Text>();
     }
 
     @Override

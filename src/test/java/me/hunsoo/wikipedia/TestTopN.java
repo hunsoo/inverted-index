@@ -1,5 +1,7 @@
 package me.hunsoo.wikipedia;
 
+import me.hunsoo.wikipedia.TopNMapper;
+import me.hunsoo.wikipedia.TopNReducer;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.NullWritable;
@@ -8,9 +10,7 @@ import org.apache.hadoop.mrunit.mapreduce.MapDriver;
 import org.apache.hadoop.mrunit.mapreduce.MapReduceDriver;
 import org.apache.hadoop.mrunit.mapreduce.ReduceDriver;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,9 +29,9 @@ public class TestTopN {
     public void setup() {
         TopNMapper mapper = new TopNMapper();
         TopNReducer reducer = new TopNReducer();
-        mapDriver = new MapDriver<>();
+        mapDriver = new MapDriver();
         mapDriver.setMapper(mapper);
-        reduceDriver = new ReduceDriver<>();
+        reduceDriver = new ReduceDriver();
         reduceDriver.setReducer(reducer);
         mapReduceDriver = new MapReduceDriver();
         mapReduceDriver.setMapper(mapper);
@@ -56,11 +56,11 @@ public class TestTopN {
 
     @Test
     public void testReducer() throws IOException {
-        List<Text> phpList = new ArrayList<>();
+        List<Text> phpList = new ArrayList();
         phpList.add(new Text("java 200"));
-        List<Text> javaList = new ArrayList<>();
+        List<Text> javaList = new ArrayList();
         javaList.add(new Text("java 200"));
-        List<Text> pythonList = new ArrayList<>();
+        List<Text> pythonList = new ArrayList();
         pythonList.add(new Text("python 100"));
 
         reduceDriver.withInput(NullWritable.get(), phpList);

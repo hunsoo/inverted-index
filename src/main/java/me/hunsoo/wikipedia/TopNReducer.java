@@ -10,7 +10,7 @@ import java.util.TreeMap;
 
 public class TopNReducer extends Reducer<NullWritable, Text, NullWritable, Text> {
     private int N;
-    private TreeMap<Integer, Text> topN = new TreeMap<>();
+    private TreeMap<Integer, Text> topN = new TreeMap<Integer, Text>();
 
     public TopNReducer() {
         System.out.println("Init TopNReducer");

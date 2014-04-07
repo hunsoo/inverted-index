@@ -30,7 +30,7 @@ public class InvertedIndexReducer extends Reducer<Text, LongWritable, Text, Text
             }
             firstDocId = false;
             docIdCsv.append(itr.next().toString());
-        }
+		}
 
         context.write(word, new Text(docIdCsv.toString()));
     }

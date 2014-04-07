@@ -44,6 +44,6 @@ public class TopN {
         FileInputFormat.addInputPath(job, new Path(commandArgs[1]));
         FileOutputFormat.setOutputPath(job, new Path(commandArgs[2]));
 
-        System.exit(job.waitForCompletion(true) ? 0 : 1);
-    }
+	System.exit(job.waitForCompletion(true) ? 0 : 1);
+}
 }

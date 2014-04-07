@@ -1,6 +1,7 @@
 package me.hunsoo.wikipedia;
 
-import org.apache.hadoop.io.IntWritable;
+import me.hunsoo.wikipedia.InvertedIndexMapper;
+import me.hunsoo.wikipedia.InvertedIndexReducer;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mrunit.mapreduce.MapDriver;
@@ -25,9 +26,9 @@ public class TestInvertedIndex {
     public void setup() {
         InvertedIndexMapper mapper = new InvertedIndexMapper();
         InvertedIndexReducer reducer = new InvertedIndexReducer();
-        mapDriver = new MapDriver<>();
+        mapDriver = new MapDriver();
         mapDriver.setMapper(mapper);
-        reduceDriver = new ReduceDriver<>();
+        reduceDriver = new ReduceDriver();
         reduceDriver.setReducer(reducer);
         mapReduceDriver = new MapReduceDriver();
         mapReduceDriver.setMapper(mapper);
@@ -37,7 +38,7 @@ public class TestInvertedIndex {
 
     @Test
     public void testMapper() throws IOException {
-        mapDriver.withInput(new LongWritable(1), new Text("<title>AccessibleComputing</title> <ns>0</ns> <id>10</id> <redirect title=\"Computer accessibility\" /> <revision> <id>381202555</id> <parentid>381200179</parentid> <timestamp>2010-08-26T22:38:36Z</timestamp> <contributor> <username>OlEnglish</username> <id>7181920</id> </contributor> <minor /> <comment>[[Help:Reverting|Reverted]] edits by [[Special:Contributions/76.28.186.133|76.28.186.133]] ([[User talk:76.28.186.133|talk]]) to last version by Gurch</comment> <text xml:space=\"preserve\">#REDIRECT [[Computer accessibility]] {{R from CamelCase}}</text> <sha1>lo15ponaybcg2sf49sstw9gdjmdetnk</sha1> <model>wikitext</model> <format>text/x-wiki</format> </revision>"));
+        mapDriver.withInput(new LongWritable(1), new Text("<title>AccessibleComputing</title> <ns>0</ns> <id>10</id> <redirect title=\"Computer accessibility\" /> <revision> <id>381202555</id> <parentid>381200179</parentid> <timestamp>2010-08-26T22:38:36Z</timestamp> <contributor> <username>OlEnglish</username> <id>7181920</id> </contributor> <minor /> <comment>[[Help:Reverting|Reverted]] edits by [[Special:Contributions/76.28.186.133|76.28.186.133]] ([[User talk:76.28.186.133|talk]]) to last version by Gurch</comment> <text xml:space=\"preserve\">#REDIRECT [[Computer accessibility]] {{R from CamelCase}}</text> <sha1>lo15ponaybcg2sf49sstw9gdjmdetnk</sha1> <models>wikitext</models> <format>text/x-wiki</format> </revision>"));
         mapDriver.withOutput(new Text("computer"), new LongWritable(10));
         mapDriver.withOutput(new Text("accessibility"), new LongWritable(10));
         mapDriver.runTest();
@@ -46,7 +47,7 @@ public class TestInvertedIndex {
     @Test
     public void testReducer() throws IOException {
 
-        List<LongWritable> values = new ArrayList<>();
+        List<LongWritable> values = new ArrayList();
         values.add(new LongWritable(10));
         reduceDriver.withInput(new Text("accessibility"), values);
         reduceDriver.withInput(new Text("computer"), values);
@@ -57,7 +58,7 @@ public class TestInvertedIndex {
 
     @Test
     public void testMapReduce() throws IOException {
-        mapReduceDriver.withInput(new LongWritable(1), new Text("<title>AccessibleComputing</title> <ns>0</ns> <id>10</id> <redirect title=\"Computer accessibility\" /> <revision> <id>381202555</id> <parentid>381200179</parentid> <timestamp>2010-08-26T22:38:36Z</timestamp> <contributor> <username>OlEnglish</username> <id>7181920</id> </contributor> <minor /> <comment>[[Help:Reverting|Reverted]] edits by [[Special:Contributions/76.28.186.133|76.28.186.133]] ([[User talk:76.28.186.133|talk]]) to last version by Gurch</comment> <text xml:space=\"preserve\">#REDIRECT [[Computer accessibility]] {{R from CamelCase}}</text> <sha1>lo15ponaybcg2sf49sstw9gdjmdetnk</sha1> <model>wikitext</model> <format>text/x-wiki</format> </revision>"));
+        mapReduceDriver.withInput(new LongWritable(1), new Text("<title>AccessibleComputing</title> <ns>0</ns> <id>10</id> <redirect title=\"Computer accessibility\" /> <revision> <id>381202555</id> <parentid>381200179</parentid> <timestamp>2010-08-26T22:38:36Z</timestamp> <contributor> <username>OlEnglish</username> <id>7181920</id> </contributor> <minor /> <comment>[[Help:Reverting|Reverted]] edits by [[Special:Contributions/76.28.186.133|76.28.186.133]] ([[User talk:76.28.186.133|talk]]) to last version by Gurch</comment> <text xml:space=\"preserve\">#REDIRECT [[Computer accessibility]] {{R from CamelCase}}</text> <sha1>lo15ponaybcg2sf49sstw9gdjmdetnk</sha1> <models>wikitext</models> <format>text/x-wiki</format> </revision>"));
         mapReduceDriver.addOutput(new Text("accessibility"), new Text("10"));
         mapReduceDriver.addOutput(new Text("computer"), new Text("10"));
         mapReduceDriver.runTest();
