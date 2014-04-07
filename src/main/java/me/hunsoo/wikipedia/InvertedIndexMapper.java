@@ -76,7 +76,7 @@ public class InvertedIndexMapper extends Mapper<LongWritable, Text, Text, LongWr
 		wikiPage = WikiXMLParser.parse(page);
 		String wikiText = wikiPage.getWikiText();
 		long documentId = wikiPage.getDocumentId();
-		docId = new LongWritable(documentId);
+//		docId = new LongWritable(documentId);
 
 		context.setStatus("docId " + documentId);
 
